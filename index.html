@@ -10,15 +10,29 @@
   <main class="container">
     <h1>Job Scrapper (Demo)</h1>
     <p>검색할 언어를 선택해주세요.</p>
-    <nav>
-      <ul>
-        <li><a href="./search/search-python.html">Python</a></li>
-        <li><a href="./search/search-javascript.html">JavaScript</a></li>
-        <li><a href="./search/search-java.html">Java</a></li>
-      </ul>
-    </nav>
+
+    <form id="jump-form">
+      <label for="kw">Keyword</label>
+      <select id="kw" required>
+        <option value="" selected disabled>키워드를 선택하세요</option>
+        <option value="python">Python</option>
+        <option value="javascript">JavaScript</option>
+        <option value="java">Java</option>
+      </select>
+      <button type="submit">결과 페이지 열기</button>
+    </form>
+
     <hr>
-    <p><small>이 사이트는 사실 가짜입니다!</small></p>
+    <p><small>실제 실시간 검색은 로컬 Flask 앱에서 동작합니다.</small></p>
   </main>
+
+  <script>
+    document.getElementById('jump-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const kw = document.getElementById('kw').value;
+      if (!kw) return;
+      window.location.href = `./search/search-${kw}.html`;
+    });
+  </script>
 </body>
 </html>
