@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results for {{ keyword }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Results for "{{ keyword }}"</h1>
+        <a href="/">🔍 New Search</a>
+        <a href="/export?keyword={{ keyword }}" role="button" class="secondary">⬇️ Export CSV</a>
+
+        {% if jobs %}
+            <p>{{ jobs|length }} jobs found.</p>
+            <ul>
+            {% for job in jobs %}
+                <li>
+                    <article>
+                        <header>
+                            <h3><a href="{{ job.link }}" target="_blank">{{ job.title }}</a></h3>
+                            <small>{{ job.company }}</small>
+                            <small>📍 {{ job.source }}</small>
+                        </header>
+                        <p>
+                            {% if job.reward %}
+                                💰 {{ job.reward }}
+                            {% endif %}
+                        </p>
+                    </article>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No jobs found. Try another keyword!</p>
+        {% endif %}
+    </main>
+</body>
+</html>
