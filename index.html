@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Job Scrapper – Demo</title>
+  <title>Job Scrapper</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
 </head>
 <body>
   <main class="container">
-    <h1>Job Scrapper (Demo)</h1>
+    <h1>Job Scrapper</h1>
     <p>검색할 언어를 선택해주세요.</p>
 
     <form id="jump-form">
@@ -30,7 +30,6 @@
     document.getElementById('jump-form').addEventListener('submit', function (e) {
       e.preventDefault();
       const kw = document.getElementById('kw').value;
-      if (!kw) return;
       window.location.href = `./search/search-${kw}.html`;
     });
   </script>
