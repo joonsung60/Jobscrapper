@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 def scrape_wanted(keyword):
     jobs = []
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto(f"https://www.wanted.co.kr/search?query={keyword}&tab=position")
         for i in range(2):
@@ -25,7 +25,7 @@ def scrape_wanted(keyword):
 def scrape_berlin(keyword):
     jobs = []
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto(f"https://berlinstartupjobs.com/skill-areas/{keyword}/")
         for i in range(2):
@@ -45,7 +45,7 @@ def scrape_berlin(keyword):
 def scrape_wework(keyword):
     jobs = []
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto(f"https://weworkremotely.com/remote-jobs/search?utf8=%E2%9C%93&term={keyword}")
         for i in range(2):
@@ -67,7 +67,7 @@ def scrape_wework(keyword):
 def scrape_web3(keyword):
     jobs = []
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto(f"https://web3.career/{keyword}-jobs")
         for i in range(2):
@@ -86,17 +86,8 @@ def scrape_web3(keyword):
 
 def extract_jobs(keyword):
     results = []
-
-    for name, fn in [
-        ("wanted", scrape_wanted),
-        ("berlin", scrape_berlin),
-        ("wework", scrape_wework),
-        ("web3", scrape_web3),
-    ]:
-        try:
-            part = fn(keyword)
-            results.extend(part)
-        except Exception as e:
-            print(f"[WARN] {name} failed: {e}")
-
+    results.extend(scrape_wanted(keyword))
+    results.extend(scrape_berlin(keyword))
+    results.extend(scrape_wework(keyword))
+    results.extend(scrape_web3(keyword))
     return results
