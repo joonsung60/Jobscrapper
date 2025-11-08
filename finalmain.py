@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, send_file
-from finalapp_chat import extract_jobs
+from finalapp import extract_jobs
 from finalfile import save_to_file
 
 app = Flask("JobScrapper")
@@ -8,9 +8,9 @@ db = {}
 
 @app.route("/")
 def home():
-    return render_template("home-chat.html")
+    return render_template("home.html")
 
-@app.route("/search-chat")
+@app.route("/search")
 def search():
     keyword = request.args.get("keyword")
     if keyword == None:
@@ -20,7 +20,7 @@ def search():
     else:
         jobs = extract_jobs(keyword)
         db[keyword] = jobs
-    return render_template("search-chat.html", keyword=keyword, jobs=jobs)
+    return render_template("search.html", keyword=keyword, jobs=jobs)
 
 @app.route("/export")
 def export():
@@ -28,7 +28,7 @@ def export():
     if keyword == None:
         return redirect("/")
     if keyword not in db:
-        return redirect(f"/search-chat?keyword={keyword}")
+        return redirect(f"/search?keyword={keyword}")
     save_to_file(keyword, db[keyword])
     return send_file(f"{keyword}.csv", as_attachment=True)
 app.run("0.0.0.0")
